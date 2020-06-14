@@ -186,6 +186,61 @@ public class ZeroTierSocket extends Socket
 		bound = true;
 	}
 
+
+	/*
+	 * Binds the socket to a local address
+	 */
+	public void accept(SocketAddress localAddr)
+			throws IOException
+	{
+		if (isSocketBound()) {
+			throw new SocketException("accept: ZeroTierSocket is already bound");
+		}
+		if (isSocketClosed()) {
+			throw new SocketException("accept: ZeroTierSocket is closed");
+		}
+		if (localAddr != null && (!(localAddr instanceof InetSocketAddress))) {
+			throw new IllegalArgumentException("accept: Unsupported address type");
+		}
+		InetSocketAddress addr = (InetSocketAddress)localAddr;
+		if (addr != null && addr.isUnresolved()) {
+			throw new SocketException("accept: Unresolved address");
+		}
+		if (addr == null) {
+			addr = new InetSocketAddress(0);
+		}
+		getImpl().accept(addr.getAddress(), addr.getPort());
+		bound = true;
+	}
+
+
+	/*
+	 * Binds the socket to a local address
+	 */
+	public void listen(SocketAddress localAddr)
+			throws IOException
+	{
+		if (isSocketBound()) {
+			throw new SocketException("accept: ZeroTierSocket is already bound");
+		}
+		if (isSocketClosed()) {
+			throw new SocketException("accept: ZeroTierSocket is closed");
+		}
+		if (localAddr != null && (!(localAddr instanceof InetSocketAddress))) {
+			throw new IllegalArgumentException("accept: Unsupported address type");
+		}
+		InetSocketAddress addr = (InetSocketAddress)localAddr;
+		if (addr != null && addr.isUnresolved()) {
+			throw new SocketException("accept: Unresolved address");
+		}
+		if (addr == null) {
+			addr = new InetSocketAddress(0);
+		}
+		getImpl().accept(addr.getAddress(), addr.getPort());
+		bound = true;
+	}
+
+
 	/*
 	 * Closes the socket
 	 */
